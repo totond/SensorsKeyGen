@@ -9,32 +9,45 @@ HEAD_STR_JAVA = '''    @SensorsEventName(eventName = "%s")
 	{
 	'''
 
-HEAD_STR_KOTLIN = '''    @SensorsEventName(eventName = "FundHomeModuleView")
-object ViewFundHomeModuleView {
+HEAD_STR_KOTLIN = '''@SensorsEventName(eventName = "%s")
+object %sEvent {
 '''
 
-HEAD_ANNO_STR = '''
+HEAD_ANNO_STR_JAVA = '''
 	/**
 	 * %s
 	 */
 '''
 
-ANNO_STR = '''
+HEAD_ANNO_STR_KOTLIN = '''
+/**
+ * %s
+ */
+'''
+
+ANNO_STR_JAVA = '''
 		/**
 		 * %s
 		 */
 '''
 
+ANNO_STR_KOTLIN = '''
+    /**
+     * %s
+     */
+'''
+
 PARAMS_STR_JAVA = '''	    public static final String PROPERTY_%s = "%s";
 '''
 
-PARAMS_STR_KOTLIN = '''	  const val PROPERTY_%s = "%s"
+PARAMS_STR_KOTLIN = '''    const val PROPERTY_%s = "%s"
 '''
 
 END_STR = "\n    }"
 
 LAN_KOTLIN = "kotlin"
 LAN_JAVA = "java"
+
 
 # endregion
 
@@ -57,22 +70,33 @@ class EventData(object):
         return self._params
 
 
-def test_for_sys(language):
-    print('the language is', language)
-
-
 excel_path = ""
 language = "kotlin"
 parser = argparse.ArgumentParser(description='用于把excel中的神策埋点数据转化为实际代码的工具')
 parser.add_argument('--language', '-l', help='language 属性，可选kotlin、java。非必要参数,默认值kotlin')
+parser.add_argument('--path', '-p', help='path 属性，代表输入数据的excel。非必要参数,默认值是当前目录下的xxx')
 args = parser.parse_args()
+
+
+def parseParams(lan, path):
+    global language
+    global excel_path
+    print('the language is', lan)
+    print('the path is', path)
+
+    language = lan
+    if lan != LAN_JAVA:
+        language = LAN_KOTLIN
+
+    excel_path = path
+
 
 if __name__ == '__main__':
     try:
-        test_for_sys(args.language)
+        parseParams(args.language, args.path)
     except Exception as e:
         print(e)
-if (excel_path == ""):
+if pd.isnull(excel_path) or excel_path == "":
     excel_path = os.path.abspath(os.path.dirname(__file__)) + "\\testE1.xlsx"
 
 
@@ -89,26 +113,35 @@ def get_lower_case_name(text):
 
 # 处理注释换行
 def getAnno(anno):
-    return anno.replace('\n', '\n         * ')
+    if language == LAN_KOTLIN:
+        return anno.replace('\n', '\n     * ')
+    else:
+        return anno.replace('\n', '\n         * ')
 
 
 def buildOutput(event_data):
     if language == LAN_KOTLIN:
-        headStr = HEAD_STR_KOTLIN
+        head_str = HEAD_STR_KOTLIN
+        head_anno_str = HEAD_ANNO_STR_KOTLIN
+        params_str = PARAMS_STR_KOTLIN
+        params_anno_str = ANNO_STR_KOTLIN
     else:
-        headStr = HEAD_STR_JAVA
+        head_str = HEAD_STR_JAVA
+        head_anno_str = HEAD_ANNO_STR_JAVA
+        params_str = PARAMS_STR_JAVA
+        params_anno_str = ANNO_STR_JAVA
 
     if pd.isnull(event_data.anno):
-        head_anno = ""
+        head_anno_str = ""
     else:
-        head_anno = (HEAD_ANNO_STR % getAnno(event_data.anno))
+        head_anno_str = (head_anno_str % getAnno(event_data.anno))
 
-    head = headStr % (event_data.name, event_data.name,)
+    head = head_str % (event_data.name, event_data.name)
     params = ''
     for p in event_data.params:
-        params = params + ANNO_STR % getAnno(p[1]) + PARAMS_STR_JAVA % (get_lower_case_name(p[0]).upper(), p[0])
+        params = params + params_anno_str % getAnno(p[1]) + params_str % (get_lower_case_name(p[0]).upper(), p[0])
 
-    return head_anno + head + params + END_STR
+    return head_anno_str + head + params + END_STR
 
 
 # excel_path = "C:\\Users\\jacketyan\\PycharmProjects\\point\\testE1.xlsx"
