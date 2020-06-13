@@ -1,5 +1,42 @@
 import pandas as pd
+import os
+import argparse
 
+# region 文案存储
+
+HEAD_STR_JAVA = '''    @SensorsEventName(eventName = "%s")
+	public static class %sEvent
+	{
+	'''
+
+HEAD_STR_KOTLIN = '''    @SensorsEventName(eventName = "FundHomeModuleView")
+object ViewFundHomeModuleView {
+'''
+
+HEAD_ANNO_STR = '''
+	/**
+	 * %s
+	 */
+'''
+
+ANNO_STR = '''
+		/**
+		 * %s
+		 */
+'''
+
+PARAMS_STR_JAVA = '''	    public static final String PROPERTY_%s = "%s";
+'''
+
+PARAMS_STR_KOTLIN = '''	  const val PROPERTY_%s = "%s"
+'''
+
+END_STR = "\n    }"
+
+LAN_KOTLIN = "kotlin"
+LAN_JAVA = "java"
+
+# endregion
 
 class EventData(object):
     def __init__(self, event_name, event_annotation, paramsRaw):
@@ -20,29 +57,26 @@ class EventData(object):
         return self._params
 
 
-HEAD_STR = '''    @SensorsEventName(eventName = "%s")
-	public static class %sEvent
-	{
-	'''
+def test_for_sys(language):
+    print('the language is', language)
 
-HEAD_ANNO_STR = '''
-	/**
-	 * %s
-	 */
-'''
 
-ANNO_STR = '''
-		/**
-		 * %s
-		 */
-'''
+excel_path = ""
+language = "kotlin"
+parser = argparse.ArgumentParser(description='用于把excel中的神策埋点数据转化为实际代码的工具')
+parser.add_argument('--language', '-l', help='language 属性，可选kotlin、java。非必要参数,默认值kotlin')
+args = parser.parse_args()
 
-PARAMS_STR = '''	    public static final String PROPERTY_%s = "%s";
-'''
+if __name__ == '__main__':
+    try:
+        test_for_sys(args.language)
+    except Exception as e:
+        print(e)
+if (excel_path == ""):
+    excel_path = os.path.abspath(os.path.dirname(__file__)) + "\\testE1.xlsx"
 
-END_STR = "\n    }"
 
-#驼峰转下划线
+# 驼峰转下划线
 def get_lower_case_name(text):
     lst = []
     for index, char in enumerate(text):
@@ -52,26 +86,33 @@ def get_lower_case_name(text):
 
     return "".join(lst).lower()
 
-#处理注释换行
+
+# 处理注释换行
 def getAnno(anno):
-    return anno.replace('\n','\n         * ')
+    return anno.replace('\n', '\n         * ')
 
 
 def buildOutput(event_data):
+    if language == LAN_KOTLIN:
+        headStr = HEAD_STR_KOTLIN
+    else:
+        headStr = HEAD_STR_JAVA
+
     if pd.isnull(event_data.anno):
         head_anno = ""
     else:
         head_anno = (HEAD_ANNO_STR % getAnno(event_data.anno))
 
-    head = HEAD_STR % (event_data.name, event_data.name,)
+    head = headStr % (event_data.name, event_data.name,)
     params = ''
     for p in event_data.params:
-        params = params + ANNO_STR % getAnno(p[1]) + PARAMS_STR % (get_lower_case_name(p[0]).upper(), p[0])
+        params = params + ANNO_STR % getAnno(p[1]) + PARAMS_STR_JAVA % (get_lower_case_name(p[0]).upper(), p[0])
 
     return head_anno + head + params + END_STR
 
 
-excel_path = "C:\\Users\\jacketyan\\PycharmProjects\\point\\testE1.xlsx"
+# excel_path = "C:\\Users\\jacketyan\\PycharmProjects\\point\\testE1.xlsx"
+
 d = pd.read_excel(excel_path, sheet_name="Sheet2", na_values='blank')
 hang = d.shape[0]
 lie = d.shape[1]
@@ -103,7 +144,6 @@ for i in range(hang):
         last_head_anno = head_anno
 
     first = False
-
 
 last_event = EventData(last_head, last_head_anno, paramsRaw)
 event_list.append(last_event)
