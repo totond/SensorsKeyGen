@@ -1,0 +1,80 @@
+
+/**
+ * 隐私1
+ */
+@SensorsEventName(eventName = "yinshi1")
+object yinshi1Event {
+
+    /**
+     * 类型1
+     * 1
+     * 2
+     * 3
+     */
+    const val PROPERTY_TYPE = "type"
+
+}
+
+/**
+ * 隐私2
+ */
+@SensorsEventName(eventName = "yinshi2")
+object yinshi2Event {
+
+    /**
+     * 类型1
+     * 1
+     * 2
+     * 4
+     */
+    const val PROPERTY_TYPE = "type"
+
+}
+
+/**
+ * 隐私3
+ */
+@SensorsEventName(eventName = "yinshi3")
+object yinshi3Event {
+
+    /**
+     * 类型1
+     * 1
+     * 2
+     * 5
+     */
+    const val PROPERTY_TYPE = "type"
+
+}
+
+/**
+ * 隐私4
+ */
+@SensorsEventName(eventName = "yinshi4")
+object yinshi4Event {
+
+    /**
+     * 类型1
+     * 1
+     * 2
+     * 6
+     */
+    const val PROPERTY_TYPE = "type"
+
+}
+
+/**
+ * 隐私5
+ */
+@SensorsEventName(eventName = "yinshi5")
+object yinshi5Event {
+
+    /**
+     * 类型1
+     * 1
+     * 2
+     * 7
+     */
+    const val PROPERTY_TYPE = "type"
+
+}
