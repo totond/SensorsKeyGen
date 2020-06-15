@@ -1,9 +1,9 @@
 
 /**
- * 隐私1
+ * 名字注释1
  */
-@SensorsEventName(eventName = "yinshi1")
-object yinshi1Event {
+@SensorsEventName(eventName = "Yinshi1")
+object Yinshi1Event {
 
     /**
      * 类型1
@@ -13,16 +13,26 @@ object yinshi1Event {
      */
     const val PROPERTY_TYPE = "type"
 
+    /**
+     * 名字1
+     */
+    const val PROPERTY_NAME = "name"
+
+    /**
+     * 标识1
+     */
+    const val PROPERTY_SYMBOL = "symbol"
+
 }
 
 /**
- * 隐私2
+ * 名字注释2
  */
-@SensorsEventName(eventName = "yinshi2")
-object yinshi2Event {
+@SensorsEventName(eventName = "Yinshi2")
+object Yinshi2Event {
 
     /**
-     * 类型1
+     * 类型2
      * 1
      * 2
      * 4
@@ -32,13 +42,13 @@ object yinshi2Event {
 }
 
 /**
- * 隐私3
+ * 名字注释3
  */
-@SensorsEventName(eventName = "yinshi3")
-object yinshi3Event {
+@SensorsEventName(eventName = "Yinshi3")
+object Yinshi3Event {
 
     /**
-     * 类型1
+     * 类型3
      * 1
      * 2
      * 5
@@ -48,13 +58,13 @@ object yinshi3Event {
 }
 
 /**
- * 隐私4
+ * 名字注释4
  */
-@SensorsEventName(eventName = "yinshi4")
-object yinshi4Event {
+@SensorsEventName(eventName = "Yinshi4")
+object Yinshi4Event {
 
     /**
-     * 类型1
+     * 类型4
      * 1
      * 2
      * 6
@@ -64,13 +74,13 @@ object yinshi4Event {
 }
 
 /**
- * 隐私5
+ * 名字注释5
  */
-@SensorsEventName(eventName = "yinshi5")
-object yinshi5Event {
+@SensorsEventName(eventName = "Yinshi5")
+object Yinshi5Event {
 
     /**
-     * 类型1
+     * 类型5
      * 1
      * 2
      * 7
