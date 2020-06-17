@@ -1,14 +1,16 @@
 # SensorsKeyGen
 
+
 ## 背景
 
-项目里面最近很多需求都需要加上神策埋点，神策埋点需要我们根据产品给的表来写出对应的埋点key代码，做多了之后发现，这些代码是：
+最近项目里面很多需求都需要加上神策埋点，神策埋点需要我们根据产品给的表来写出对应的埋点key代码，做多了之后发现，这些代码是：
 
 - 大量重复性的
 - 逻辑性比较一致的
 - 结构比较简单的
 
 这就想着像之前的批量string工具一样，搞一个一键生成神策代码的工具。
+
 
 
 ## 环境准备
@@ -25,11 +27,11 @@
 
 #### 输入
 
-![https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%85%A5%E4%BE%8B%E5%AD%901.png?raw=true]()
+![](https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%85%A5%E4%BE%8B%E5%AD%901.png?raw=true)
 
 #### 执行脚本后，输出
 
-![https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%87%BA%E4%BE%8B%E5%AD%902.png?raw=true]()
+![](https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%87%BA%E4%BE%8B%E5%AD%902.png?raw=true)
 
 
 
@@ -49,9 +51,9 @@
 
 #### 数据格式
 
-需要转化为埋点的数据，从第二行开始放：分为ABCD4列
+需要转化为埋点的数据，从第二行开始放，分为ABCD4列：
 
-![https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%85%A5%E4%BE%8B%E5%AD%901.png?raw=true]()
+![](https://github.com/totond/SensorsKeyGen/blob/master/pic/%E8%BE%93%E5%85%A5%E4%BE%8B%E5%AD%901.png?raw=true)
 
 如果有一个埋点事件对应多个属性，请像上面那样合并单元格
 
@@ -76,3 +78,4 @@ optional arguments:
                         out_type 属性，代表输出模式，可选clip（输出到剪切板）或者file（输出到当前目录下的point_out.txt）。非必要参数,默认值是clip
 
 ```
+
