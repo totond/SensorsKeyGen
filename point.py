@@ -57,8 +57,8 @@ OUT_TYPE_FILE = "file"
 
 class EventData(object):
     def __init__(self, event_name, event_annotation, paramsRaw):
-        self._event_name = event_name
-        self._event_annotation = event_annotation
+        self._event_name = str(event_name)
+        self._event_annotation = str(event_annotation)
         self._params = paramsRaw
 
     @property
@@ -154,12 +154,12 @@ def buildOutput(event_data):
     head = head_str % (event_data.name, event_data.name)
     params = ''
     for p in event_data.params:
-        params = params + params_anno_str % getAnno(p[1]) + params_str % (get_lower_case_name(p[0]).upper(), p[0])
+        params = params + params_anno_str % getAnno(str(p[1])) + params_str % (get_lower_case_name(str(p[0])).upper(), str(p[0]))
 
     return head_anno_str + head + params + end_str
 
 
-d = pd.read_excel(excel_path, sheet_name="Sheet2", na_values='blank')
+d = pd.read_excel(excel_path, sheet_name="Sheet1", na_values='blank')
 hang = d.shape[0]
 lie = d.shape[1]
 
@@ -208,7 +208,7 @@ else:
     with open(os.path.abspath(os.path.dirname(__file__)) + "\\point_output.txt", "wb") as f:
         f.write(out.encode())
 
-print("已输出完毕")
+print("已输出完毕 out_type =", out_type)
 
 class EventParamData(object):
     def __init__(self, param_name="", param_annotation=""):
