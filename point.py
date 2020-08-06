@@ -159,7 +159,7 @@ def buildOutput(event_data):
     return head_anno_str + head + params + end_str
 
 
-d = pd.read_excel(excel_path, sheet_name="Sheet2", na_values='blank')
+d = pd.read_excel(excel_path, sheet_name="Sheet1", na_values='blank')
 hang = d.shape[0]
 lie = d.shape[1]
 
